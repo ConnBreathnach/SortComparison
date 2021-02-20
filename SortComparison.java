@@ -63,9 +63,39 @@
      */
     static double [] quickSort (double a[]){
 	
-		 //todo: implement the sort
+		recursiveQuick(a, 0, a.length-1);
+		return a;
+    }
 
-    }//end quicksort
+    static void recursiveQuick(double[] numbers, int lowerIndex, int upperIndex){
+        if(upperIndex <= lowerIndex){
+            return;
+        }
+        int pivotPosition = partition(numbers, lowerIndex, upperIndex);
+        recursiveQuick(numbers, lowerIndex, pivotPosition-1);
+        recursiveQuick(numbers, pivotPosition+1, upperIndex);
+    }
+
+    static int partition(double[] numbers, int lowerIndex, int upperIndex){
+        int i = lowerIndex;
+        int j = upperIndex+1;
+        double pivot = numbers[lowerIndex];
+        while(true){
+            while(numbers[++i] < pivot){
+                if(i == upperIndex) break;
+            }
+            while(pivot < numbers[--j]){
+                if(j == lowerIndex) break;
+            }
+            if( i >= j) break;
+            double temp = numbers[i];
+            numbers[i] = numbers[j];
+            numbers[j] = temp;
+        }
+        numbers[lowerIndex] = numbers[j];
+        numbers[j] = pivot;
+        return j;
+    }
 
     /**
      * Sorts an array of doubles using Merge Sort.
